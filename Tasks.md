@@ -2,20 +2,23 @@
 
 
 ## Design
-- UI Design Figma
-    - Read Docs
+[ ]- UI Design Figma
+[ ]- Read Docs
 
 ## Frontend
-- React + JS
-- Bootstrap + CSS
-- react-router-dom
+- install tools
+    [x]- React + JS
+    [x]- tailwind + CSS
+    [x]- react-router-dom
 
 ## Backend
-- PHP
+- install tools
+    [x]- PHP
 
 ## Database
-- MySQL
-    - ERD
+- install tools
+    [x]- MySQL
+- ERD
 
 ## Deployment
 - Docker
