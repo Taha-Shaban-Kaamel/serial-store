@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -28,10 +28,26 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        $abilities = User::where('email',$request->email)->first()->abilities()->toArray();
-        if (auth()->attempt($credentials)) {
-            $token = auth()->user()->createToken('authToken',$abilities)->plainTextToken;
-            return response()->json(['token' => $token], 200);
+
+        // Debugging: Check if credentials are received correctly
+        if (empty($credentials['email']) || empty($credentials['password'])) {
+            return response()->json(['message' => 'Email and password are required'], 400);
+        }
+
+        // Debugging: Check if user exists
+        $user = User::where('email', $credentials['email'])->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Debugging: Check if password matches
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return response()->json(['message' => 'Invalid password'], 401);
+        }
+
+        if (Auth::attempt($credentials)) {
+            $token = Auth::user()->createToken('authToken')->plainTextToken;
+            return response()->json(['token' => $token,$user], 200);
         }
 
         return response()->json(['message' => 'Unauthorized'], 401);
@@ -42,5 +58,5 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out'], 200);
     }
 
-   
+
 }
