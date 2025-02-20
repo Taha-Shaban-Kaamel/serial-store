@@ -12,3 +12,4 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('roles', [UserController::class, 'role'])->middleware(['auth:sanctum', 'abilities:full access']);
 Route::post('assign-role', [UserController::class, 'assignRole'])->middleware(['auth:sanctum', 'abilities:full access']);
+// http://127.0.0.1:8000/api/login

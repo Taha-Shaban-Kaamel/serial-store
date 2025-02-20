@@ -28,9 +28,9 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        $abilities = User::where('email',$request->email)->first()->abilities()->toArray();
+        //$abilities = User::where('email',$request->email)->first()->abilities()->toArray();
         if (auth()->attempt($credentials)) {
-            $token = auth()->user()->createToken('authToken',$abilities)->plainTextToken;
+            $token = auth()->user()->createToken('authToken')->plainTextToken;
             return response()->json(['token' => $token], 200);
         }
 
@@ -42,5 +42,5 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out'], 200);
     }
 
-   
+
 }
